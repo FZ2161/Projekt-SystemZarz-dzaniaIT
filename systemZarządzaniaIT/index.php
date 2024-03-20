@@ -7,7 +7,7 @@
     <title>index</title>
 </head>
 <body>
-    <h2>indexxxxxxxxxxxxx</h2>
+    <h2>index</h2>
     <?php
     include "menu.php";
     ?>
