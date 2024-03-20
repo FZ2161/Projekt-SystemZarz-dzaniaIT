@@ -12,5 +12,22 @@
     include "menu.php";
     ?>
     
+    <!-- ------------------------------------------------------- -->
+
+    <form action="" method="post">
+        <input type="text" name="login">
+        <input type="text" name="password">
+        <input type="submit" value="zarejestruj">
+    </form>
+
+    <?php
+    if(!empty($_POST["login"])&&!empty($_POST["password"])){
+        $login=$_POST["login"];
+        $password=$_POST["password"];
+        echo 1;
+    } else {
+        echo 0;
+    }
+    ?>
 </body>
 </html>
