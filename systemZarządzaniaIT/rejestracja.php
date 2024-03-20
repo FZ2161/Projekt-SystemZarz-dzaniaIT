@@ -23,10 +23,34 @@
     <?php
     if(!empty($_POST["login"])&&!empty($_POST["password"])){
         $login=$_POST["login"];
-        $password=$_POST["password"];
-        echo 1;
+        $pass=$_POST["password"];
+
+        function szyfruj_haslo($pass){
+            return md5($pass);
+        }
+        $zaszyfrowane = szyfruj_haslo($pass);
+        
+        $dbHost="localhost";
+        $dbUser="root";
+        $dbPassword="";
+        $db="system_zarzadzania_it";
+
+        $conn=mysqli_connect($dbHost, $dbUser, $dbPassword, $db);
+
+        if(!$conn){
+            // echo mysqli_connect_error($conn);
+        }
+
+        $sql="INSERT INTO users VALUES ('$login', '$zaszyfrowane', 'user')";
+
+        if(mysqli_query($conn, $sql)){
+            echo "<p style='color:green;'>" . "dodano użytkownika" . "</p>" ;
+        } else {
+            echo "<p style='color:red;'>" . "Nie dodano użytkownika" . "</p>" ;
+        }
+
     } else {
-        echo 0;
+        echo "<p>" . "Aby się zarejestrować wypełnij pola" . "</p>" ;
     }
     ?>
 </body>
