@@ -1,0 +1,12 @@
+body{
+    margin: 0;
+    padding: 10px;
+    background-color: #222222;
+    color: whitesmoke;
+}
+a{
+    color: rgb(72, 135, 252);
+}
+a:hover{
+    color: #ffffff;
+}
