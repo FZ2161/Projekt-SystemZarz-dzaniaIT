@@ -1,3 +1,7 @@
+<?php 
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -10,6 +14,11 @@
     <h2>LOGOWANIE</h2>
     <?php
     include "menu.php";
+    if(!empty($_SESSION["zalogowanoJako"])){
+        echo $_SESSION["zalogowanoJako"];
+    } else {
+        echo "nie zalogowano";
+    }
     ?>
     <!-- ------------------------------------------------------- -->
 
@@ -46,15 +55,19 @@
 
         if(mysqli_num_rows($results)>0){
             while($row=mysqli_fetch_assoc($results)){
-            $zalogowanoJako=$row["uprawnienia"];  //zapis zmiennej zalogowano jako:
-            echo "zalogowano jako: ". $row["uprawnienia"];
+            $_SESSION["zalogowanoJako"]=$row["uprawnienia"];  //zapis zmiennej zalogowano jako:
+            echo "zalogowano jako: ". $_SESSION["zalogowanoJako"];
         }
         } else{
-            echo "niepoprawne dane";
+            echo "<p>niepoprawne dane</p>";
         }
 
     } else {
-        echo "podaj wszystkie dane";
+        echo "<p>podaj wszystkie dane</p>";
+    }
+
+    if($_SESSION["zalogowanoJako"]){
+        
     }
     ?>
 

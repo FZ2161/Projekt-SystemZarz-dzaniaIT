@@ -1,3 +1,7 @@
+<?php 
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -10,6 +14,11 @@
     <h2>index</h2>
     <?php
     include "menu.php";
+    if(!empty($_SESSION["zalogowanoJako"])){
+        echo $_SESSION["zalogowanoJako"];
+    } else {
+        echo "nie zalogowano";
+    }
     ?>
     
 </body>
