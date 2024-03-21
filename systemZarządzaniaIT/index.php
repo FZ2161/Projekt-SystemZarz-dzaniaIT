@@ -1,5 +1,6 @@
 <?php 
 session_start();
+
 ?>
 
 <!DOCTYPE html>
@@ -28,7 +29,8 @@ session_start();
     </form>
 
     <?php
-    if($_GET["wyloguj"]){
+    if(isset($_GET["wyloguj"])){
+        $_SESSION["zalogowanoJako"]="nie zalogowano";
         echo "wylogowano";
     }
     ?>
