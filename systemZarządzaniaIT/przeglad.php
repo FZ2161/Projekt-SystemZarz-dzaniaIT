@@ -24,6 +24,8 @@ if(!isset($_SESSION["zalogowanoJako"])){
         echo "nie zalogowano";
     }
     ?>
+
+    
     
 </body>
 </html>

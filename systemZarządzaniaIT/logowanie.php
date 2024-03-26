@@ -17,21 +17,7 @@ if(!isset($_SESSION["zalogowanoJako"])){
     <h2>LOGOWANIE</h2>
     <?php
     include "menu.php";
-    if(!empty($_SESSION["zalogowanoJako"])){
-        echo $_SESSION["zalogowanoJako"];
-    } else {
-        echo "nie zalogowano";
-    }
-    ?>
-    <!-- ------------------------------------------------------- -->
 
-    <form action="" method="post">
-        <input type="text" name="login">
-        <input type="text" name="password">
-        <input type="submit" value="zaloguj">
-    </form>
-
-    <?php
     if(!empty($_POST["login"])&&!empty($_POST["password"])){
         $login=$_POST["login"];
         $pass=$_POST["password"];
@@ -72,6 +58,22 @@ if(!isset($_SESSION["zalogowanoJako"])){
     if(!isset($_SESSION["zalogowanoJako"])){
          $_SESSION["zalogowanoJako"] ="nie zalogowano";
     }
+    // if(!empty($_SESSION["zalogowanoJako"])){
+    //     echo $_SESSION["zalogowanoJako"];
+    // } else {
+    //     echo "nie zalogowano";
+    // }
+    ?>
+    <!-- ------------------------------------------------------- -->
+
+    <form action="" method="post">
+        <input type="text" name="login">
+        <input type="text" name="password">
+        <input type="submit" value="zaloguj">
+    </form>
+
+    <?php
+    
     ?>
 
 </body>

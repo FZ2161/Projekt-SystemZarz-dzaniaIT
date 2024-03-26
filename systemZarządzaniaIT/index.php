@@ -15,6 +15,10 @@ session_start();
     <h2>index</h2>
     <?php
     include "menu.php";
+
+    if(isset($_GET["wyloguj"])){
+        $_SESSION["zalogowanoJako"]="nie zalogowano";
+    }
     
     if(!empty($_SESSION["zalogowanoJako"])){
         echo $_SESSION["zalogowanoJako"];
@@ -29,10 +33,10 @@ session_start();
     </form>
 
     <?php
-    if(isset($_GET["wyloguj"])){
-        $_SESSION["zalogowanoJako"]="nie zalogowano";
-        echo "wylogowano";
-    }
+    // if(isset($_GET["wyloguj"])){
+    //     $_SESSION["zalogowanoJako"]="nie zalogowano";
+    //     echo "wylogowano";
+    // }
     ?>
     
 </body>
