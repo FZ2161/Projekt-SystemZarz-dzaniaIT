@@ -11,13 +11,12 @@ if(!isset($_SESSION["zalogowanoJako"])){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style1.css">
-    <!-- hilight.js -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/default.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
+    <link rel="stylesheet" href="prism.css">
         
     <title>przeglad</title>
 </head>
-<body>
+<body >
+    <header data-plugin-header="line-numbers"></header>
     <h2>index</h2>
     <?php include "menu.php"; ?>
     
@@ -30,23 +29,15 @@ if(!isset($_SESSION["zalogowanoJako"])){
     ?>
 
     <!-- Kod HTML, który chcesz podświetlić -->
-    <pre>
-        <code id="code" class="xml">
-            &lt;p&gt;
-                Hello World!
-            &lt;/p&gt;
-            
-        </code>
-    </pre>
+    
+    <pre class="line-numbers" data-line="1"><code class="language-php">
+        &lt;?php
+        // kod php
+        echo "Hello, World!";
+        ?>
+    </code></pre>
 
-    <script>
-        // Highlight
-        document.addEventListener("DOMContentLoaded", function(event) {
-            // pobranie elementu z kodem
-            const codeElement = document.getElementById('code');
-            // podswietlenie
-            hljs.highlightElement(codeElement);
-        });
-    </script>
+
+<script src="./prism.js"></script>
 </body>
 </html>
