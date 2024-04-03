@@ -8,9 +8,15 @@
 </head>
 <body>
     <h2>LOGOWANIE</h2>
-    <?php
-    include "menu.php";
+    <div id="menu">
+        <?php 
+            include "menu.php";
 
+        ?>
+    </div>
+    
+    <?php
+    
     if(!empty($_POST["login"])&&!empty($_POST["password"])){
         $login=$_POST["login"];
         $pass=$_POST["password"];
@@ -56,6 +62,7 @@
     // } else {
     //     echo "nie zalogowano";
     // }
+
     ?>
     <!-- ------------------------------------------------------- -->
 

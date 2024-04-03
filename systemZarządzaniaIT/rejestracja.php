@@ -16,8 +16,14 @@
 </head>
 <body>
     <h2>REJESTRACJA</h2>
+    <div id="menu">
+
+        <?php 
+            include "menu.php";
+        ?>
+    </div>
+
     <?php
-    include "menu.php";
     if(!empty($_SESSION["zalogowanoJako"])){
         echo $_SESSION["zalogowanoJako"];
     } else {

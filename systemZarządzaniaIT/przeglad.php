@@ -11,7 +11,12 @@
 <body >
     <header data-plugin-header="line-numbers"></header>
     <h2>index</h2>
-    <?php include "menu.php"; ?>
+    <div id="menu">
+
+        <?php 
+            include "menu.php";
+        ?>
+    </div>
     
     <?php
     if(!empty($_SESSION["zalogowanoJako"])){

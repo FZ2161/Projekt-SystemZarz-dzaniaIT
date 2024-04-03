@@ -8,9 +8,13 @@
 </head>
 <body>
     <h2>index</h2>
-    <?php
-    include "menu.php";
+    <div id="menu">
+        <?php 
+            include "menu.php";
+        ?>
+    </div>
 
+<?php
     if(isset($_GET["wyloguj"])){
         $_SESSION["zalogowanoJako"]="nie zalogowano";
     }
