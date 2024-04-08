@@ -1,9 +1,8 @@
 <?php 
-// session_start();
-// if(!isset($_SESSION["zalogowanoJako"])){
-//     $_SESSION["zalogowanoJako"] ="nie zalogowano";
-// }
-
+session_start();
+if(!isset($_SESSION["zalogowanoJako"])){
+    $_SESSION["zalogowanoJako"] = "nie zalogowano";
+}
 ?>
 
 <!DOCTYPE html>
@@ -19,7 +18,8 @@
     <div id="menu">
 
         <?php 
-            include "menu.php";
+             if($_SESSION["zalogowanoJako"]=="admin") include "admin-menu.php";
+             else include "menu.php";
         ?>
     </div>
 
@@ -61,6 +61,7 @@
         }
 
         $sql="INSERT INTO users VALUES ('$login', '$zaszyfrowane', 'user')";
+
 
         if(mysqli_query($conn, $sql)){
             echo "<p style='color:green;'>" . "dodano użytkownika" . "</p>" ;

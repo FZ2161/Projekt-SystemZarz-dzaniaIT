@@ -1,3 +1,9 @@
+<?php 
+session_start();
+if(!isset($_SESSION["zalogowanoJako"])){
+    $_SESSION["zalogowanoJako"] = "nie zalogowano";
+}
+?>
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -10,8 +16,8 @@
     <h2>LOGOWANIE</h2>
     <div id="menu">
         <?php 
-            include "menu.php";
-
+             if($_SESSION["zalogowanoJako"]=="admin") include "admin-menu.php";
+             else include "menu.php";
         ?>
     </div>
     
