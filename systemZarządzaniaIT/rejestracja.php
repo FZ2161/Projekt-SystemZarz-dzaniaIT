@@ -29,21 +29,17 @@ if(!isset($_SESSION["zalogowanoJako"])){
         ?>
     </div>
 
-    <?php
-    if(!empty($_SESSION["zalogowanoJako"])){
-        echo $_SESSION["zalogowanoJako"];
-    } else {
-        echo "nie zalogowano";
-    }
-    ?>
+    <div id="glowny">
     
     <!-- ------------------------------------------------------- -->
 
     <form action="" method="post">
-        <input type="text" name="login">
-        <input type="text" name="password">
-        <input type="submit" value="zarejestruj">
-    </form>
+        <label for='login'>Login:</label>
+        <input type='text' id='login' name='login'> <br><br>
+        <label for='password'>Hasło:</label>
+        <input type='password' id='password' name='password'> <br><br>
+        <input type='submit' value='Zarejestruj'>
+        </form>
 
     <?php
     if(!empty($_POST["login"])&&!empty($_POST["password"])){
@@ -79,5 +75,8 @@ if(!isset($_SESSION["zalogowanoJako"])){
         echo "<p>" . "Aby się zarejestrować wypełnij pola" . "</p>" ;
     }
     ?>
+
+
+    </div>
 </body>
 </html>

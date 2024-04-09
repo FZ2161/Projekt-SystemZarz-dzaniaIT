@@ -88,9 +88,11 @@ if(!isset($_SESSION["zalogowanoJako"])){
         echo "
         <form action='' method='get'>
             <input style='display: none;' type='text' value='wyloguj' name='wyloguj'>
-            <input type='submit' value='wyloguj'>
+            <input type='submit' value='wyloguj'> <br><br>
         </form>
         ";
+
+        
         if(isset($_GET["wyloguj"])){
             $_SESSION["zalogowanoJako"]="nie zalogowano";
             header("Location: {$_SERVER['PHP_SELF']}");
@@ -98,7 +100,7 @@ if(!isset($_SESSION["zalogowanoJako"])){
         }
         
         if(!empty($_SESSION["zalogowanoJako"])){
-            echo $_SESSION["zalogowanoJako"];
+            echo "zalogowano jako: " . $_SESSION["zalogowanoJako"];
         } else {
             echo "nie zalogowano";
         }

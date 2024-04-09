@@ -4,13 +4,6 @@ if(!isset($_SESSION["zalogowanoJako"])){
     $_SESSION["zalogowanoJako"] = "nie zalogowano";
 }
 
-
-if (isset($_GET["wyloguj"])) {
-    $_SESSION["zalogowanoJako"] = "nie zalogowano";
-    // Przekierowanie do tej samej strony po wylogowaniu
-    header("Location: {$_SERVER['PHP_SELF']}");
-    exit;
-}
 ?>
 <!DOCTYPE html>
 <html lang="pl">
@@ -21,7 +14,7 @@ if (isset($_GET["wyloguj"])) {
     <title>wyloguj</title>
 </head>
 <body>
-    <h2>WYLOGUJ</h2>
+    <h2>INDEX</h2>
     <div id="menu">
         <?php 
             if($_SESSION["zalogowanoJako"] == "admin") {
@@ -36,29 +29,7 @@ if (isset($_GET["wyloguj"])) {
         ?>
     </div>
 
-<?php
-    if(isset($_GET["wyloguj"])){
-        $_SESSION["zalogowanoJako"]="nie zalogowano";
-    }
-    
-    if(!empty($_SESSION["zalogowanoJako"])){
-        echo $_SESSION["zalogowanoJako"];
-    } else {
-        echo "nie zalogowano";
-    }
-    ?>
 
-    <form action="" method="get">
-        <input style="display: none;" type="text" value="wyloguj" name="wyloguj">
-        <input type="submit" value="wyloguj">
-    </form>
-
-    <?php
-    // if(isset($_GET["wyloguj"])){
-    //     $_SESSION["zalogowanoJako"]="nie zalogowano";
-    //     echo "wylogowano";
-    // }
-    ?>
     
 </body>
 </html>

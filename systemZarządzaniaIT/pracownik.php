@@ -3,6 +3,7 @@ session_start();
 if(!isset($_SESSION["zalogowanoJako"])){
     $_SESSION["zalogowanoJako"] = "nie zalogowano";
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="pl">
@@ -10,17 +11,14 @@ if(!isset($_SESSION["zalogowanoJako"])){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style1.css">
-    <link rel="stylesheet" href="prism.css">
-        
-    <title>przeglad</title>
+    <title>wyloguj</title>
 </head>
-<body >
-    <header data-plugin-header="line-numbers"></header>
-    <h2>index</h2>
+<body>
+    <h2>PRACOWNIK</h2>
+    <!-- --------------------  MENU  -------------------- -->
     <div id="menu">
-
         <?php 
-             if($_SESSION["zalogowanoJako"] == "admin") {
+            if($_SESSION["zalogowanoJako"] == "admin") {
                 include "admin-menu.php";
             } else if ($_SESSION["zalogowanoJako"] == "user"){
                 include "user-menu.php";
@@ -31,20 +29,10 @@ if(!isset($_SESSION["zalogowanoJako"])){
             }
         ?>
     </div>
-    
-    <?php
-    ?>
 
-    <!-- Kod HTML, który chcesz podświetlić -->
-    
-    <pre class="line-numbers" data-line="1"><code class="language-php">
-        &lt;?php
-        // kod php
-        echo "Hello, World!";
-        ?>
-    </code></pre>
+    <div id="glowny">
+        <textarea id="kod_php" name="kod_php" rows="20" cols="100"></textarea><br><br>
+    </div>
 
-
-<script src="./prism.js"></script>
 </body>
 </html>

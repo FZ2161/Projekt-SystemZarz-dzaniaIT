@@ -55,7 +55,7 @@ if (isset($_GET["wyloguj"])) {
             <h3>
                 <?php
                     if(!empty($_SESSION["zalogowanoJako"])){
-                        echo "Zalogowano jako: " . ucfirst($_SESSION["zalogowanoJako"]);
+                        echo "";
                     } else {
                         echo "Nie zalogowano";
                     }
