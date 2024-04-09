@@ -3,6 +3,9 @@ session_start();
 if(!isset($_SESSION["zalogowanoJako"])){
     $_SESSION["zalogowanoJako"] = "nie zalogowano";
 }
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="pl">
@@ -16,8 +19,13 @@ if(!isset($_SESSION["zalogowanoJako"])){
     <h2>LOGOWANIE</h2>
     <div id="menu">
         <?php 
-             if($_SESSION["zalogowanoJako"]=="admin") include "admin-menu.php";
-             else include "menu.php";
+            if($_SESSION["zalogowanoJako"] == "admin") {
+                include "admin-menu.php";
+            } else if ($_SESSION["zalogowanoJako"] == "user" || $_SESSION["zalogowanoJako"] == "pracownik"){
+                include "menu.php";
+            } else { 
+                include "nMenu.php";
+            }
         ?>
     </div>
     
@@ -51,7 +59,9 @@ if(!isset($_SESSION["zalogowanoJako"])){
             while($row=mysqli_fetch_assoc($results)){
             $_SESSION["zalogowanoJako"]=$row["uprawnienia"];  //zapis zmiennej zalogowano jako:
             echo "zalogowano jako: ". $_SESSION["zalogowanoJako"];
-        }
+            }
+            header("Location: {$_SERVER['PHP_SELF']}");
+            exit;
         } else{
             echo "<p>niepoprawne dane</p>";
         }

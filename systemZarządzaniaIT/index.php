@@ -3,6 +3,14 @@ session_start();
 if(!isset($_SESSION["zalogowanoJako"])){
     $_SESSION["zalogowanoJako"] = "nie zalogowano";
 }
+
+
+if (isset($_GET["wyloguj"])) {
+    $_SESSION["zalogowanoJako"] = "nie zalogowano";
+    // Przekierowanie do tej samej strony po wylogowaniu
+    header("Location: {$_SERVER['PHP_SELF']}");
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="pl">
@@ -16,7 +24,13 @@ if(!isset($_SESSION["zalogowanoJako"])){
     <h2>index</h2>
     <div id="menu">
         <?php 
-            include "menu.php";
+            if($_SESSION["zalogowanoJako"] == "admin") {
+                include "admin-menu.php";
+            } else if ($_SESSION["zalogowanoJako"] == "user" || $_SESSION["zalogowanoJako"] == "pracownik"){
+                include "menu.php";
+            } else { 
+                include "nMenu.php";
+            }
         ?>
     </div>
 

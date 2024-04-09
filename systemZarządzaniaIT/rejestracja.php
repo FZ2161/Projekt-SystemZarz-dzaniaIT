@@ -16,10 +16,14 @@ if(!isset($_SESSION["zalogowanoJako"])){
 <body>
     <h2>REJESTRACJA</h2>
     <div id="menu">
-
         <?php 
-             if($_SESSION["zalogowanoJako"]=="admin") include "admin-menu.php";
-             else include "menu.php";
+            if($_SESSION["zalogowanoJako"] == "admin") {
+                include "admin-menu.php";
+            } else if ($_SESSION["zalogowanoJako"] == "user" || $_SESSION["zalogowanoJako"] == "pracownik"){
+                include "menu.php";
+            } else { 
+                include "nMenu.php";
+            }
         ?>
     </div>
 

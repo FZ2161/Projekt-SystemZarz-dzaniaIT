@@ -13,15 +13,18 @@ if(!isset($_SESSION["zalogowanoJako"])){
     <title>index</title>
 </head>
 <body>
+    <h2>ZMIANA UPRAWNIEŃ</h2>
     <div id="menu">
-        <h2>ZMIANA UPRAWNIEŃ</h2>
         <?php 
-        if($_SESSION["zalogowanoJako"]=="admin") include "admin-menu.php";
-        else include "menu.php";
-            echo $_SESSION["zalogowanoJako"];
+            if($_SESSION["zalogowanoJako"] == "admin") {
+                include "admin-menu.php";
+            } else if ($_SESSION["zalogowanoJako"] == "user" || $_SESSION["zalogowanoJako"] == "pracownik"){
+                include "menu.php";
+            } else { 
+                include "nMenu.php";
+            }
         ?>
     </div>
-
     <div id="glowny">
 <!-- ------------------------- FORMULARZ ------------------------ -->
 
