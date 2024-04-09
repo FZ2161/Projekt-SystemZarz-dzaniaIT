@@ -18,10 +18,10 @@ if (isset($_GET["wyloguj"])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style1.css">
-    <title>index</title>
+    <title>wyloguj</title>
 </head>
 <body>
-    <h2>index</h2>
+    <h2>WYLOGUJ</h2>
     <div id="menu">
         <?php 
             if($_SESSION["zalogowanoJako"] == "admin") {

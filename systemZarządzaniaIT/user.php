@@ -36,7 +36,7 @@ if (isset($_GET["wyloguj"])) {
     ?>
 
 
-    <h2>user</h2>
+    <h2>USER</h2>
     <div id="menu">
         <?php 
             if($_SESSION["zalogowanoJako"] == "admin") {
