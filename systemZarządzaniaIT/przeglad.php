@@ -19,9 +19,16 @@ if(!isset($_SESSION["zalogowanoJako"])){
     <h2>index</h2>
     <div id="menu">
 
-    <?php 
-             if($_SESSION["zalogowanoJako"]=="admin") include "admin-menu.php";
-             else include "menu.php";
+        <?php 
+             if($_SESSION["zalogowanoJako"] == "admin") {
+                include "admin-menu.php";
+            } else if ($_SESSION["zalogowanoJako"] == "user"){
+                include "user-menu.php";
+            } else if ($_SESSION["zalogowanoJako"] == "pracownik"){
+                include "pracownik-menu.php";
+            } else { 
+                include "nMenu.php";
+            }
         ?>
     </div>
     

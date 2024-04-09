@@ -18,8 +18,10 @@ if(!isset($_SESSION["zalogowanoJako"])){
         <?php 
             if($_SESSION["zalogowanoJako"] == "admin") {
                 include "admin-menu.php";
-            } else if ($_SESSION["zalogowanoJako"] == "user" || $_SESSION["zalogowanoJako"] == "pracownik"){
-                include "menu.php";
+            } else if ($_SESSION["zalogowanoJako"] == "user"){
+                include "user-menu.php";
+            } else if ($_SESSION["zalogowanoJako"] == "pracownik"){
+                include "pracownik-menu.php";
             } else { 
                 include "nMenu.php";
             }
@@ -76,10 +78,6 @@ if(!isset($_SESSION["zalogowanoJako"])){
             } else {
                 echo "<p style='color: red;'>Brak użytkowników w bazie danych.</p>";
             }
-            
-            
-            
-            
             
             
             if(isset($_POST['submit'])) {

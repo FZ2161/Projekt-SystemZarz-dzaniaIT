@@ -21,13 +21,30 @@ if (isset($_GET["wyloguj"])) {
     <title>index</title>
 </head>
 <body>
+
+    <?php
+         $dbHost="localhost";
+         $dbUser="root";
+         $dbPassword="";
+         $db="system_zarzadzania_it";
+ 
+         $conn=mysqli_connect($dbHost, $dbUser, $dbPassword, $db);
+ 
+         if(!$conn){
+             echo "Nie można połączyć się z bazą danych";
+         }
+    ?>
+
+
     <h2>user</h2>
     <div id="menu">
         <?php 
             if($_SESSION["zalogowanoJako"] == "admin") {
                 include "admin-menu.php";
-            } else if ($_SESSION["zalogowanoJako"] == "user" || $_SESSION["zalogowanoJako"] == "pracownik"){
-                include "menu.php";
+            } else if ($_SESSION["zalogowanoJako"] == "user"){
+                include "user-menu.php";
+            } else if ($_SESSION["zalogowanoJako"] == "pracownik"){
+                include "pracownik-menu.php";
             } else { 
                 include "nMenu.php";
             }
@@ -48,12 +65,35 @@ if (isset($_GET["wyloguj"])) {
             <form action="" method="get">
                 <label for="projekty">Dołącz do projektu:</label>
                 <select name="projekty" id="projekty">
-                    <option value="1">Projekt 1</option>
-                    <option value="2">Projekt 2</option>
-                    <option value="3">Projekt 3</option>
+                    <option value="">----------</option>
+                    <?php
+                        $sql = "SELECT * FROM projects";
+                        $result = mysqli_query($conn, $sql);
+
+                        if(mysqli_num_rows($result) > 0) {
+                            while($row = mysqli_fetch_assoc($result)) {
+                                echo "<option value='" . $row['id'] . "'>" . "Projekt " . $row['id'] . "</option>";
+                            }
+                        }
+                    ?>
                 </select>
-                <input type="submit" value="Dołącz">
+                <input type="submit" value="Dołącz">  <br><br>
             </form>
+
+            <?php
+                if(!empty($_GET["projekty"])){
+                    $wybranyProjekt = $_GET["projekty"];
+                    $user = $_SESSION["zalogowanoJako"];
+                    $sql = "INSERT INTO dolaczeni (project_id, user) VALUES ('$wybranyProjekt', '$user')";
+
+                    if(mysqli_query($conn, $sql)){
+                        echo "<p style='color: green;'>Dołączono do projektu</p>";
+                    } else {
+                        echo "<p style='color: red;'>Nie udało się dołączyć do projektu</p>";
+
+                    }
+                }
+            ?>
 
         </div>
         <div id="prawy">
@@ -61,6 +101,8 @@ if (isset($_GET["wyloguj"])) {
         </div>
     </div>
 
-    
+    <?php
+    mysqli_close($conn)
+    ?>
 </body>
 </html>
