@@ -33,6 +33,23 @@ if (isset($_GET["wyloguj"])) {
             }
         ?>
     </div>
+    <div id="user-glowny">
+        <div id="lewy">
+            <h3>
+                <?php
+                    if(!empty($_SESSION["zalogowanoJako"])){
+                        echo "Zalogowano jako: " . ucfirst($_SESSION["zalogowanoJako"]);
+                    } else {
+                        echo "Nie zalogowano";
+                    }
+                ?>
+            </h3>
+            
+        </div>
+        <div id="prawy">
+            prawy
+        </div>
+    </div>
 
     
 </body>
