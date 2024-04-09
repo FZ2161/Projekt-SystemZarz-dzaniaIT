@@ -44,7 +44,17 @@ if (isset($_GET["wyloguj"])) {
                     }
                 ?>
             </h3>
-            
+
+            <form action="" method="get">
+                <label for="projekty">Dołącz do projektu:</label>
+                <select name="projekty" id="projekty">
+                    <option value="1">Projekt 1</option>
+                    <option value="2">Projekt 2</option>
+                    <option value="3">Projekt 3</option>
+                </select>
+                <input type="submit" value="Dołącz">
+            </form>
+
         </div>
         <div id="prawy">
             prawy
