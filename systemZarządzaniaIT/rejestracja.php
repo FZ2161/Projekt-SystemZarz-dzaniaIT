@@ -16,7 +16,7 @@ if(!isset($_SESSION["zalogowanoJako"])){
 <body>
     <h2>REJESTRACJA</h2>
     <div id="menu">
-        <?php 
+        <?php  // menu
             if($_SESSION["zalogowanoJako"] == "admin") {
                 include "admin-menu.php";
             } else if ($_SESSION["zalogowanoJako"] == "user"){

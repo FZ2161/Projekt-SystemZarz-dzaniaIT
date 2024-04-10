@@ -18,9 +18,12 @@ if (isset($_GET["wyloguj"])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style1.css">
+    <link rel="stylesheet" href="prism.css">
     <title>index</title>
 </head>
 <body>
+    <header data-plugin-header="line-numbers"></header>
+
 
     <?php
          $dbHost="localhost";
@@ -76,7 +79,7 @@ if (isset($_GET["wyloguj"])) {
                             }
                         }
                     ?>
-                </select>
+                </select><br><br>
                 <input type="submit" value="Dołącz">  <br><br>
             </form>
 
@@ -97,12 +100,62 @@ if (isset($_GET["wyloguj"])) {
 
         </div>
         <div id="prawy">
-            prawy
+            <div class="border">
+                <?php
+                $sql="SELECT DISTINCT dolaczeni.user, projects.id, projects.kod FROM projects JOIN dolaczeni ON projects.id = dolaczeni.project_id";
+
+                $results = mysqli_query($conn, $sql);
+                // // //  FORMULARZ WYBIERAJĄCY PROJEKT  // // //
+                
+                if(mysqli_num_rows($results)>0){
+                    echo "<form action='' method='post'>";
+                    echo "<label for='projekt'>Wybierz projekt: </label>";
+                    echo "<select name='projekt'>";
+                    while($row = mysqli_fetch_assoc($results)) {
+                        echo "<option value='" . $row['id'] . "'>" . ("Projekt ") . $row['id'] . "</option>";
+                    }
+                    $kod = $row["kod"];
+                    echo "</select><br><br>";
+                    echo "<input type='submit' value='Zobacz kod projektu'>";
+                } else{
+                    echo "<p>Brak danych</p>";
+                }
+                ?>
+            </div>
+            <div>
+                <pre class="line-numbers" data-line="1"><code class="language-php">
+                    <?php
+                    if(!empty($_POST["projekt"])){
+                    $id = $_POST["projekt"];
+                        $sql="SELECT DISTINCT kod from projects where id = $id";
+                        $results = mysqli_query($conn, $sql);
+                        while($row = mysqli_fetch_assoc($results)) {
+                            echo $row["kod"];
+                        }
+                    } else {
+                        echo "#####  TUTAJ ZOSTANIE WYŚWIETLONY KOD PROJEKTU  #####";
+                    }
+                    ?>
+                </code></pre>
+            </div>
+
+            <div class="border">
+                    <h3>Komentarze</h3>
+                    <?php
+                    $sql="SELECT * FROM commments";
+
+                    $results = mysqli_query($conn, $sql);
+                    ?>
+            </div>
         </div>
     </div>
 
     <?php
     mysqli_close($conn)
     ?>
+
+
+
+    <script src="prism.js"></script>
 </body>
 </html>
