@@ -19,6 +19,7 @@ if (isset($_GET["wyloguj"])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style1.css">
     <link rel="stylesheet" href="prism.css">
+    <link rel="stylesheet" href="user.css">
     <title>index</title>
 </head>
 <body>
@@ -100,27 +101,39 @@ if (isset($_GET["wyloguj"])) {
 
         </div>
         <div id="prawy">
-            <div class="border">
-                <?php
-                $sql="SELECT DISTINCT dolaczeni.user, projects.id, projects.kod FROM projects JOIN dolaczeni ON projects.id = dolaczeni.project_id";
+            <div class="border" id="user-gora">
+                <div id="userGL">
+                    <?php
+                    $sql="SELECT DISTINCT dolaczeni.user, projects.id, projects.kod FROM projects JOIN dolaczeni ON projects.id = dolaczeni.project_id";
 
-                $results = mysqli_query($conn, $sql);
-                // // //  FORMULARZ WYBIERAJĄCY PROJEKT  // // //
-                
-                if(mysqli_num_rows($results)>0){
-                    echo "<form action='' method='post'>";
-                    echo "<label for='projekt'>Wybierz projekt: </label>";
-                    echo "<select name='projekt'>";
-                    while($row = mysqli_fetch_assoc($results)) {
-                        echo "<option value='" . $row['id'] . "'>" . ("Projekt ") . $row['id'] . "</option>";
+                    $results = mysqli_query($conn, $sql);
+                    // // //  FORMULARZ WYBIERAJĄCY PROJEKT  // // //
+
+                    if(mysqli_num_rows($results)>0){
+                        echo "<form action='' method='post'>";
+                        echo "<label for='projekt'>Wybierz projekt: </label>";
+                        echo "<select name='projekt'>";
+                        while($row = mysqli_fetch_assoc($results)) {
+                            echo "<option value='" . $row['id'] . "'>" . ("Projekt ") . $row['id'] . "</option>";
+                        }
+                        $kod = $row["kod"];
+                        echo "</select><br><br>";
+                        echo "<input type='submit' value='Zobacz kod projektu'>";
+                    } else{
+                        echo "<p>Brak danych</p>";
                     }
-                    $kod = $row["kod"];
-                    echo "</select><br><br>";
-                    echo "<input type='submit' value='Zobacz kod projektu'>";
-                } else{
-                    echo "<p>Brak danych</p>";
-                }
-                ?>
+                    ?>
+                </div>
+                <div id="userGP">
+                    <h3>Dodaj komentarz</h3>
+                    <?php
+                    if(!empty($_POST["projekt"])){
+                        $id=$_POST["projekt"];
+                        echo $id;
+                    }
+                    ?>
+                    
+                </div>
             </div>
             <div>
                 <pre class="line-numbers" data-line="1"><code class="language-php">
@@ -142,9 +155,24 @@ if (isset($_GET["wyloguj"])) {
             <div class="border">
                     <h3>Komentarze</h3>
                     <?php
-                    $sql="SELECT * FROM commments";
-
+                    ////////////////////////////////////    do zmiany
+                    $id = isset($_POST["projekt"]) ? $_POST["projekt"] : null;
+                    $sql="SELECT DISTINCT * FROM comments WHERE `project-id` = $id";
                     $results = mysqli_query($conn, $sql);
+                    
+                    if(mysqli_num_rows($results)>0){
+                        while($row = mysqli_fetch_assoc($results)) {
+                            $linia = $row['line'];
+                            echo "<div class='komentarz'> <h4>";
+                            echo "komentarz do linii: $linia";
+                            echo "</h4>";
+                            echo "<p>";
+                            echo $row["tresc"];
+                            echo "</p></div>";
+                        }
+                    } else{
+                        echo "<p>Brak komentarzy</p>";
+                    }
                     ?>
             </div>
         </div>

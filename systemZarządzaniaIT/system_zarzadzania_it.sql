@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 09, 2024 at 07:51 PM
--- Wersja serwera: 10.4.32-MariaDB
--- Wersja PHP: 8.2.12
+-- Generation Time: Apr 10, 2024 at 10:11 AM
+-- Wersja serwera: 10.4.28-MariaDB
+-- Wersja PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,27 @@ SET time_zone = "+00:00";
 --
 -- Database: `system_zarzadzania_it`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `comments`
+--
+
+CREATE TABLE `comments` (
+  `id` int(11) NOT NULL,
+  `project-id` int(11) NOT NULL,
+  `user` varchar(15) NOT NULL,
+  `tresc` varchar(50) NOT NULL,
+  `line` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `comments`
+--
+
+INSERT INTO `comments` (`id`, `project-id`, `user`, `tresc`, `line`) VALUES
+(1, 1, 'user', 'przykładowy komentarz', 1);
 
 -- --------------------------------------------------------
 
@@ -57,7 +78,8 @@ CREATE TABLE `projects` (
 --
 
 INSERT INTO `projects` (`id`, `kod`) VALUES
-(1, '        &lt;?php\r\n        // kod php\r\n        echo \"Hello, World!\";\r\n        ?>');
+(1, '        &lt;?php\r\n        // kod php\r\n        echo \"Hello, World!\";\r\n        ?>'),
+(2, '<?php>\r\necho 1;\r\n?>');
 
 -- --------------------------------------------------------
 
@@ -85,6 +107,12 @@ INSERT INTO `users` (`login`, `password`, `uprawnienia`) VALUES
 --
 
 --
+-- Indeksy dla tabeli `comments`
+--
+ALTER TABLE `comments`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indeksy dla tabeli `dolaczeni`
 --
 ALTER TABLE `dolaczeni`
@@ -107,6 +135,12 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `comments`
+--
+ALTER TABLE `comments`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `dolaczeni`
 --
 ALTER TABLE `dolaczeni`
@@ -116,7 +150,7 @@ ALTER TABLE `dolaczeni`
 -- AUTO_INCREMENT for table `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
