@@ -156,7 +156,7 @@ if (isset($_GET["wyloguj"])) {
                     <h3>Komentarze</h3>
                     <?php
                     ////////////////////////////////////    do zmiany
-                    $id = isset($_POST["projekt"]) ? $_POST["projekt"] : null;
+                    $id = isset($_POST["projekt"]) ? $_POST["projekt"] : 0;
                     $sql="SELECT DISTINCT * FROM comments WHERE `project-id` = $id";
                     $results = mysqli_query($conn, $sql);
                     
