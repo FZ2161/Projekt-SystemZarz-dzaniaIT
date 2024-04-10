@@ -169,6 +169,7 @@ if (isset($_GET["wyloguj"])) {
                             echo "<p>";
                             echo $row["tresc"];
                             echo "</p></div>";
+                            ///////////////////////////////////////////// dodać header refresh
                         }
                     } else{
                         echo "<p>Brak komentarzy</p>";
