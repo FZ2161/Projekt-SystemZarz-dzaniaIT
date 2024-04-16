@@ -83,8 +83,9 @@ if (isset($_GET["wyloguj"])) {
                 </select><br><br>
                 <input type="submit" value="Dołącz">  <br><br>
             </form>
-
+                        
             <?php
+            ######################   Dodawanie do projektu   ######################   
                 if (!empty($_GET["projekty"])) {
                     $wybranyProjekt = $_GET["projekty"];
                     $user = $_SESSION["zalogowanoJako"];
@@ -146,6 +147,7 @@ if (isset($_GET["wyloguj"])) {
             <div>
                 <pre class="line-numbers" data-line="1"><code class="language-php">
                     <?php
+                    ######################   Wyświetlanie kodu   ######################   
                     if(!empty($_POST["projekt"])){
                     $id = $_POST["projekt"];
                         $sql="SELECT DISTINCT kod from projects where id = $id";

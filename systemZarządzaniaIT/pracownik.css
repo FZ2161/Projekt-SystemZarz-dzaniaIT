@@ -1,0 +1,27 @@
+/* #lewy{
+    width: 30%;
+}
+#prawy{
+    width: 70%;
+}
+#lewy, #prawy{
+    padding: 10px;
+    border-left: 5px dotted rgb(47, 0, 255);
+} */
+
+#glowny{
+    display: flex;
+}
+h2{
+    padding: 5px;
+    padding-top: 0;
+}
+
+textarea {
+    background-color: rgb(196, 196, 196); /* Kolor tła */
+    padding: 10px; /* Dopełnienie wewnętrzne */
+    border: 1px solid gray; /* Ramka */
+    border-radius: 5px;
+    color: rgb(40, 17, 253);
+    caret-color: rgb(0, 0, 0);
+}

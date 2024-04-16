@@ -42,9 +42,7 @@ pre{
     padding: 10px;
 }
 
-#user-glowny{
-    display: flex;    
-}
+
 
 textarea {
     background-color: gray; /* Kolor tła */
