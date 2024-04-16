@@ -85,16 +85,25 @@ if (isset($_GET["wyloguj"])) {
             </form>
 
             <?php
-                if(!empty($_GET["projekty"])){
+                if (!empty($_GET["projekty"])) {
                     $wybranyProjekt = $_GET["projekty"];
                     $user = $_SESSION["zalogowanoJako"];
-                    $sql = "INSERT INTO dolaczeni (project_id, user) VALUES ('$wybranyProjekt', '$user')";
-
-                    if(mysqli_query($conn, $sql)){
-                        echo "<p style='color: green;'>Dołączono do projektu</p>";
-                    } else {
-                        echo "<p style='color: red;'>Nie udało się dołączyć do projektu</p>";
-
+                
+                    // Sprawdzenie, czy użytkownik już jest dołączony do projektu
+                    $check_query = "SELECT * FROM dolaczeni WHERE project_id = '$wybranyProjekt' AND user = '$user'";
+                    $check_result = mysqli_query($conn, $check_query);
+                
+                    if (mysqli_num_rows($check_result) > 0) {
+                        echo "<p style='color: red;'>Już jesteś dołączony do tego projektu</p>";
+                    } else if ($_SESSION["zalogowanoJako"]=="user"){
+                        // Dodanie użytkownika do projektu
+                        $insert_query = "INSERT INTO dolaczeni (project_id, user) VALUES ('$wybranyProjekt', '$user')";
+                
+                        if (mysqli_query($conn, $insert_query)) {
+                            echo "<p style='color: green;'>Dołączono do projektu</p>";
+                        } else {
+                            echo "<p style='color: red;'>Nie udało się dołączyć do projektu</p>";
+                        }
                     }
                 }
             ?>
@@ -120,20 +129,11 @@ if (isset($_GET["wyloguj"])) {
                         echo "</select><br><br>";
                         echo "<input type='submit' value='Zobacz kod projektu'>";
                     } else{
-                        echo "<p>Brak danych</p>";
+                        echo "<p>Aby zobaczyć kod dołącz do projektu</p>";
                     }
                     ?>
                 </div>
-                <div id="userGP">
-                    <h3>Dodaj komentarz</h3>
-                    <?php
-                    if(!empty($_POST["projekt"])){
-                        $id=$_POST["projekt"];
-                        echo $id;
-                    }
-                    ?>
-                    
-                </div>
+
             </div>
             <div>
                 <pre class="line-numbers" data-line="1"><code class="language-php">
@@ -155,7 +155,7 @@ if (isset($_GET["wyloguj"])) {
             <div class="border">
                     <h3>Komentarze</h3>
                     <?php
-                    ////////////////////////////////////    do zmiany
+                    ////////////////////////////////////  komentarze
                     $id = isset($_POST["projekt"]) ? $_POST["projekt"] : 0;
                     $sql="SELECT DISTINCT * FROM comments WHERE `project-id` = $id";
                     $results = mysqli_query($conn, $sql);
@@ -163,6 +163,7 @@ if (isset($_GET["wyloguj"])) {
                     if(mysqli_num_rows($results)>0){
                         while($row = mysqli_fetch_assoc($results)) {
                             $linia = $row['line'];
+                            include "comment_form.html";
                             echo "<div class='komentarz'> <h4>";
                             echo "komentarz do linii: $linia";
                             echo "</h4>";
@@ -172,8 +173,15 @@ if (isset($_GET["wyloguj"])) {
                             ///////////////////////////////////////////// dodać header refresh
                         }
                     } else{
-                        echo "<p>Brak komentarzy</p>";
+                        include "comment_form.html";
                     }
+
+
+                    if(!empty($_POST["projekt"])){
+                        $id=$_POST["projekt"];
+                        echo $id;
+                    }
+
                     ?>
             </div>
         </div>
@@ -182,9 +190,6 @@ if (isset($_GET["wyloguj"])) {
     <?php
     mysqli_close($conn)
     ?>
-
-
-
     <script src="prism.js"></script>
 </body>
 </html>

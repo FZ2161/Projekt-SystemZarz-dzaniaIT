@@ -7,3 +7,10 @@
 h3{
     margin: 5px;
 }
+#comment_form{
+    padding: 15px;
+    border: 5px double rgb(47, 0, 255);;
+}
+h4{
+    margin: 0;
+}
