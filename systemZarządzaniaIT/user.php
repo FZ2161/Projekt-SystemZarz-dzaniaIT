@@ -123,8 +123,16 @@ if (isset($_GET["wyloguj"])) {
                         echo "<label for='projekt'>Wybierz projekt: </label>";
                         echo "<select name='projekt'>";
                         while($row = mysqli_fetch_assoc($results)) {
-                            echo "<option value='" . $row['id'] . "'>" . ("Projekt ") . $row['id'] . "</option>";
+                            echo "<option value='" . $row['id'] . "'";
+                            // Ustawienie domyślnej wartości w inpucie dla wyboru projektu
+                            if(isset($_POST['projekt']) && $_POST['projekt'] == $row['id']) {
+                                echo " selected";
+                            }
+                            echo ">" . ("Projekt ") . $row['id'] . "</option>";
                         }
+
+
+
                         $kod = $row["kod"];
                         echo "</select><br><br>";
                         echo "<input type='submit' value='Zobacz kod projektu'>";
@@ -159,11 +167,23 @@ if (isset($_GET["wyloguj"])) {
                     $id = isset($_POST["projekt"]) ? $_POST["projekt"] : 0;
                     $sql="SELECT DISTINCT * FROM comments WHERE `project-id` = $id";
                     $results = mysqli_query($conn, $sql);
+                    if($id>0){
+                        echo "<div id='comment_form'>
+                            <h4><i>Dodaj komentarz:</i></h4><br>
+                            <form action='user.php' method='POST'>
+                                <label> linia: </label>
+                                <input type='number' name='line' id='line'>
+                                <label> treść: </label>
+                                <input type='text' name='value' id='value'>
+                                <input type='submit' value='Dodaj komentarz'>
+                            </form>
+                            </div> <br>";
+                    }
                     
                     if(mysqli_num_rows($results)>0){
                         while($row = mysqli_fetch_assoc($results)) {
                             $linia = $row['line'];
-                            include "comment_form.html";
+                        
                             echo "<div class='komentarz'> <h4>";
                             echo "komentarz do linii: $linia";
                             echo "</h4>";
@@ -173,13 +193,22 @@ if (isset($_GET["wyloguj"])) {
                             ///////////////////////////////////////////// dodać header refresh
                         }
                     } else{
-                        include "comment_form.html";
+                        echo "<p><i>Aby zobaczyć komentarze wyświetl kod projektu</i></p>";
                     }
 
+                    if(!empty($_POST["line"]) && !empty($_POST["value"])){
+                        $line = $_POST["line"];
+                        $value = $_POST["value"];
+                        $zalogowanoJako = $_SESSION["zalogowanoJako"];
+                        $sql = "INSERT INTO comments (`project-id`,user,tresc,line) VALUES ('$id','$zalogowanoJako','$value','$line')";
 
-                    if(!empty($_POST["projekt"])){
-                        $id=$_POST["projekt"];
-                        echo $id;
+                        if (mysqli_query($conn, $sql)) {
+                            echo "<p style='color: green;'>Dodano komentarz</p>";
+                            
+                        } else {
+                            echo "<p style='color: red;'>Nie udało się dodać komentarza</p>";
+                        }
+
                     }
 
                     ?>
