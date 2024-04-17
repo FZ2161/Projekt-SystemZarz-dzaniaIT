@@ -71,7 +71,7 @@ if(!isset($_SESSION["zalogowanoJako"])){
                         echo "<form action='' method='post'>";
                         echo "<label for='projekt'>Wybierz projekt: </label>";
                         echo "<select name='projekt'>";
-                        echo "<option value='0'>Pusta</option>";
+                        echo "<option value='0'></option>";
                         while($row = mysqli_fetch_assoc($results)) {
                             echo "<option value='" . $row['id'] . "'>" . "Projekt " . $row['id'] . "</option>";
                         }
@@ -89,7 +89,8 @@ if(!isset($_SESSION["zalogowanoJako"])){
         <div id="prawy">
             <?php
                 if(!empty($_POST["projekt"])){
-                    $id = $_POST["projekt"];
+                    $_SESSION["id"] = $_POST["projekt"];
+                    $id = $_SESSION["id"];
                     echo "<h1>Edytowanie projektu</h1>";
                         $sql="SELECT DISTINCT kod from projects where id = $id";
                         $results = mysqli_query($conn, $sql);
@@ -104,9 +105,11 @@ if(!isset($_SESSION["zalogowanoJako"])){
                         echo "";
                     }
 
-                if(isset($_POST["kod"])){
+                if(isset($_POST["kod"]) && isset($_POST["projekt"])){
                     $kod = $_POST["kod"];
-                    $sql = "UPDATE projects SET kod = '$kod' WHERE id = $id";
+                    
+                    if(!isset($id)) $id=$_SESSION["id"];
+                    echo $sql = "UPDATE projects SET kod = '$kod' WHERE id = $id";
 
                     if(mysqli_query($conn, $sql)){
                         echo "<p style='background-color: green;'>Pomyślnie zaktualizowano kod</p>";

@@ -44,13 +44,6 @@ pre{
 
 
 
-textarea {
-    background-color: gray; /* Kolor tła */
-    padding: 10px; /* Dopełnienie wewnętrzne */
-    border: 1px solid gray; /* Ramka */
-    border-radius: 5px;
-    color: rgb(48, 25, 255);
-}
 
 h4{
     margin-bottom: 3px;

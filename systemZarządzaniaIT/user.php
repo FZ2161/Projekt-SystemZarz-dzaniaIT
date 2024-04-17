@@ -20,7 +20,7 @@ if (isset($_GET["wyloguj"])) {
     <link rel="stylesheet" href="style1.css">
     <link rel="stylesheet" href="prism.css">
     <link rel="stylesheet" href="user.css">
-    <title>index</title>
+    <title>Panel użytkownika</title>
 </head>
 <body>
     <header data-plugin-header="line-numbers"></header>
@@ -38,9 +38,8 @@ if (isset($_GET["wyloguj"])) {
              echo "Nie można połączyć się z bazą danych";
          }
     ?>
+    <h2>PANEL UŻYTKOWNIKA</h2>
 
-
-    <h2>USER</h2>
     <div id="menu">
         <?php 
             if($_SESSION["zalogowanoJako"] == "admin") {
@@ -132,8 +131,6 @@ if (isset($_GET["wyloguj"])) {
                             echo ">" . ("Projekt ") . $row['id'] . "</option>";
                         }
 
-
-
                         $kod = $row["kod"];
                         echo "</select><br><br>";
                         echo "<input type='submit' value='Zobacz kod projektu'>";
@@ -146,15 +143,16 @@ if (isset($_GET["wyloguj"])) {
             </div>
             <div>
                 <pre class="line-numbers" data-line="1"><code class="language-php">
-                    <?php
-                    ######################   Wyświetlanie kodu   ######################   
+                    <?php   
+                    ######################   Wyświetlanie kodu   ######################                       
                     if(!empty($_POST["projekt"])){
                     $id = $_POST["projekt"];
                         $sql="SELECT DISTINCT kod from projects where id = $id";
                         $results = mysqli_query($conn, $sql);
                         while($row = mysqli_fetch_assoc($results)) {
-                            echo $row["kod"];
+                            echo $kod1= $row["kod"];
                         }
+                        
                     } else {
                         echo "#####  TUTAJ ZOSTANIE WYŚWIETLONY KOD PROJEKTU  #####";
                     }
@@ -162,7 +160,7 @@ if (isset($_GET["wyloguj"])) {
                 </code></pre>
             </div>
 
-            <div class="border">
+            <div class="border" id="komentarze">
                     <h3>Komentarze</h3>
                     <?php
                     ////////////////////////////////////  komentarze
