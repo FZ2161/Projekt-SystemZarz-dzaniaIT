@@ -3,6 +3,11 @@ session_start();
 if(!isset($_SESSION["zalogowanoJako"])){
     $_SESSION["zalogowanoJako"] = "nie zalogowano";
 }
+if($_SESSION["zalogowanoJako"] != "admin"){
+    $strona = "user.php";
+    header("Location: $strona");
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="pl">

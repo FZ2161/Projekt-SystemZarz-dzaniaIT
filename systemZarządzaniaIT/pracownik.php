@@ -3,6 +3,11 @@ session_start();
 if(!isset($_SESSION["zalogowanoJako"])){
     $_SESSION["zalogowanoJako"] = "nie zalogowano";
 }
+if($_SESSION["zalogowanoJako"] != "pracownik"){
+    $strona = "user.php";
+    header("Location: $strona");
+    exit;
+}
 
 ?>
 <!DOCTYPE html>
@@ -53,6 +58,32 @@ if(!isset($_SESSION["zalogowanoJako"])){
                 <h2>
                     Utwórz projekt
                 </h2>
+                <?php
+                #####################  Wybór projektu i formularz  #####################
+
+                    // // //  FORMULARZ WYBIERAJĄCY NAZWE  // // //                    
+                    echo "<form action='' method='post'>";
+                    echo "<label for='nazwa'>Wybierz projekt nazwę projektu: </label><br>";
+                    echo "<input type='text' name='nazwa'><br><br>";
+                    echo "<input type='submit' value='Dodaj projekt'>";
+                    ?>
+
+
+            <?php
+                if(!empty($_POST["nazwa"])){
+                    $nazwa = $_SESSION["nazwa"];
+                    echo "<h1>Dodawanie projektu</h1>";
+                    $sql="INSERT INTO projects (nazwa, kod) VALUES ($nazwa, null)";
+                    $results = mysqli_query($conn, $sql);
+                    if(mysqli_query($conn, $sql)){
+                        echo "<p style='background-color: green;'>Pomyślnie dodano projekt. Aby zmienić kod, zaktualizuj go.</p>";
+                    } else {
+                        echo "<p style='background-color: red;'>Nie udało się dodać projektu</p>";
+                    }
+                }
+    
+            ?>
+                    
             </div>
 
             <div id="edytuj">
@@ -62,7 +93,7 @@ if(!isset($_SESSION["zalogowanoJako"])){
                 <?php
                 #####################  Wybór projektu i formularz  #####################
 
-                    $sql="SELECT DISTINCT dolaczeni.user, projects.id, projects.kod FROM projects JOIN dolaczeni ON projects.id = dolaczeni.project_id";
+                    $sql="SELECT DISTINCT dolaczeni.user, projects.id, projects.kod, projects.nazwa FROM projects JOIN dolaczeni ON projects.id = dolaczeni.project_id";
 
                     $results = mysqli_query($conn, $sql);
                     // // //  FORMULARZ WYBIERAJĄCY PROJEKT  // // //
@@ -73,7 +104,7 @@ if(!isset($_SESSION["zalogowanoJako"])){
                         echo "<select name='projekt'>";
                         echo "<option value='0'></option>";
                         while($row = mysqli_fetch_assoc($results)) {
-                            echo "<option value='" . $row['id'] . "'>" . "Projekt " . $row['id'] . "</option>";
+                            echo "<option value='" . $row['id'] . "'>" . "Projekt " . $row['id'] . " - " . $row["nazwa"] . "</option>";
                         }
                         $kod = $row["kod"];
                         echo "</select><br><br>";
@@ -109,7 +140,7 @@ if(!isset($_SESSION["zalogowanoJako"])){
                     $kod = $_POST["kod"];
                     
                     if(!isset($id)) $id=$_SESSION["id"];
-                    echo $sql = "UPDATE projects SET kod = '$kod' WHERE id = $id";
+                    $sql = "UPDATE projects SET kod = '$kod' WHERE id = $id";
 
                     if(mysqli_query($conn, $sql)){
                         echo "<p style='background-color: green;'>Pomyślnie zaktualizowano kod</p>";

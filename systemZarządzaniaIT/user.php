@@ -11,6 +11,11 @@ if (isset($_GET["wyloguj"])) {
     header("Location: {$_SERVER['PHP_SELF']}");
     exit;
 }
+if($_SESSION["zalogowanoJako"] != "user"){
+    $strona = "logowanie.php";
+    header("Location: $strona");
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="pl">
@@ -75,7 +80,7 @@ if (isset($_GET["wyloguj"])) {
 
                         if(mysqli_num_rows($result) > 0) {
                             while($row = mysqli_fetch_assoc($result)) {
-                                echo "<option value='" . $row['id'] . "'>" . "Projekt " . $row['id'] . "</option>";
+                                echo "<option value='" . $row['id'] . "'>" . "Projekt " . $row['id'] . " - " . $row["nazwa"] . "</option>";
                             }
                         }
                     ?>
@@ -113,7 +118,7 @@ if (isset($_GET["wyloguj"])) {
             <div class="border" id="user-gora">
                 <div id="userGL">
                     <?php
-                    $sql="SELECT DISTINCT dolaczeni.user, projects.id, projects.kod FROM projects JOIN dolaczeni ON projects.id = dolaczeni.project_id";
+                    $sql="SELECT DISTINCT dolaczeni.user, projects.nazwa ,projects.id, projects.kod FROM projects JOIN dolaczeni ON projects.id = dolaczeni.project_id";
 
                     $results = mysqli_query($conn, $sql);
                     // // //  FORMULARZ WYBIERAJĄCY PROJEKT  // // //
@@ -128,7 +133,7 @@ if (isset($_GET["wyloguj"])) {
                             if(isset($_POST['projekt']) && $_POST['projekt'] == $row['id']) {
                                 echo " selected";
                             }
-                            echo ">" . ("Projekt ") . $row['id'] . "</option>";
+                            echo ">" . ("Projekt ") . $row['id'] . " - " . $row["nazwa"] . "</option>";
                         }
 
                         $kod = $row["kod"];
@@ -150,7 +155,9 @@ if (isset($_GET["wyloguj"])) {
                         $sql="SELECT DISTINCT kod from projects where id = $id";
                         $results = mysqli_query($conn, $sql);
                         while($row = mysqli_fetch_assoc($results)) {
-                            echo $kod1= $row["kod"];
+                            $kod1= $row["kod"];
+                            $kod_bez_znakow=htmlspecialchars($kod1);
+                            echo $kod_bez_znakow;
                         }
                         
                     } else {
@@ -196,20 +203,32 @@ if (isset($_GET["wyloguj"])) {
                         echo "<p><i>Aby zobaczyć komentarze wyświetl kod projektu</i></p>";
                     }
 
-                    if(!empty($_POST["line"]) && !empty($_POST["value"])){
-                        $line = $_POST["line"];
-                        $value = $_POST["value"];
-                        $zalogowanoJako = $_SESSION["zalogowanoJako"];
-                        $sql = "INSERT INTO comments (`project-id`,user,tresc,line) VALUES ('$id','$zalogowanoJako','$value','$line')";
+                    // Sprawdzenie, czy dane POST zostały przesłane i czy nie są puste
+if (!empty($_POST["line"]) && !empty($_POST["value"])) {
+    // Przyjęcie danych z formularza
+    $line = $_POST["line"];
+    $value = $_POST["value"];
+    $zalogowanoJako = $_SESSION["zalogowanoJako"];
+    
+    // Sprawdzenie, czy wartość już istnieje w bazie danych
+    $sql_check = "SELECT * FROM comments WHERE line = '$line' AND `project-id` = '$id'"; // Zakładam, że $id jest zdefiniowane gdzieś wcześniej w kodzie
+    $result_check = mysqli_query($conn, $sql_check);
 
-                        if (mysqli_query($conn, $sql)) {
-                            echo "<p style='color: green;'>Dodano komentarz</p>";
-                            
-                        } else {
-                            echo "<p style='color: red;'>Nie udało się dodać komentarza</p>";
-                        }
-
-                    }
+    if (mysqli_num_rows($result_check) > 0) {
+        // Wartość już istnieje, więc nie dodajemy nowego komentarza
+    } else {
+        // Wartość nie istnieje, więc dodajemy nowy komentarz
+        $sql_insert = "INSERT INTO comments (`project-id`, user, tresc, line) VALUES ('$id', '$zalogowanoJako', '$value', '$line')";
+        if (mysqli_query($conn, $sql_insert)) {
+            echo "<p style='color: green;'>Dodano komentarz.</p>";
+        } else {
+            echo "<p style='color: red;'>Nie udało się dodać komentarza.</p>";
+        }
+    }
+} else {
+    // Komunikat, jeśli pola są puste
+    echo "<p style='color: red;'>Wprowadź dane do wszystkich pól.</p>";
+}
 
                     ?>
             </div>
