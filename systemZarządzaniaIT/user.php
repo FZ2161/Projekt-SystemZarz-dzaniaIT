@@ -197,27 +197,23 @@ if($_SESSION["zalogowanoJako"] != "user"){
                             echo "<p>";
                             echo $row["tresc"];
                             echo "</p></div>";
-                            ///////////////////////////////////////////// dodać header refresh
+                            /////refresh
                         }
                     } else{
                         echo "<p><i>Aby zobaczyć komentarze wyświetl kod projektu</i></p>";
                     }
-
-                    // Sprawdzenie, czy dane POST zostały przesłane i czy nie są puste
 if (!empty($_POST["line"]) && !empty($_POST["value"])) {
-    // Przyjęcie danych z formularza
     $line = $_POST["line"];
     $value = $_POST["value"];
     $zalogowanoJako = $_SESSION["zalogowanoJako"];
-    
-    // Sprawdzenie, czy wartość już istnieje w bazie danych
-    $sql_check = "SELECT * FROM comments WHERE line = '$line' AND `project-id` = '$id'"; // Zakładam, że $id jest zdefiniowane gdzieś wcześniej w kodzie
+
+    $sql_check = "SELECT * FROM comments WHERE line = '$line' AND `project-id` = '$id'"; 
     $result_check = mysqli_query($conn, $sql_check);
 
     if (mysqli_num_rows($result_check) > 0) {
-        // Wartość już istnieje, więc nie dodajemy nowego komentarza
+
     } else {
-        // Wartość nie istnieje, więc dodajemy nowy komentarz
+        // nie istnieje, komentarz
         $sql_insert = "INSERT INTO comments (`project-id`, user, tresc, line) VALUES ('$id', '$zalogowanoJako', '$value', '$line')";
         if (mysqli_query($conn, $sql_insert)) {
             echo "<p style='color: green;'>Dodano komentarz.</p>";

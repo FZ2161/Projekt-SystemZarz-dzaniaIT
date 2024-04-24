@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 10, 2024 at 10:11 AM
--- Wersja serwera: 10.4.28-MariaDB
--- Wersja PHP: 8.2.4
+-- Generation Time: Apr 24, 2024 at 07:16 AM
+-- Wersja serwera: 10.4.32-MariaDB
+-- Wersja PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -40,7 +40,9 @@ CREATE TABLE `comments` (
 --
 
 INSERT INTO `comments` (`id`, `project-id`, `user`, `tresc`, `line`) VALUES
-(1, 1, 'user', 'przykładowy komentarz', 1);
+(19, 2, 'user', 'sdfa', 1),
+(22, 1, 'user', 'jestem komentarzem', 2),
+(23, 1, 'user', 'jestem komentarzem', 3);
 
 -- --------------------------------------------------------
 
@@ -59,8 +61,8 @@ CREATE TABLE `dolaczeni` (
 --
 
 INSERT INTO `dolaczeni` (`id`, `project_id`, `user`) VALUES
-(2, 1, 'user'),
-(3, 1, 'user');
+(15, 1, 'user'),
+(16, 2, 'user');
 
 -- --------------------------------------------------------
 
@@ -70,6 +72,7 @@ INSERT INTO `dolaczeni` (`id`, `project_id`, `user`) VALUES
 
 CREATE TABLE `projects` (
   `id` int(11) NOT NULL,
+  `nazwa` varchar(30) DEFAULT NULL,
   `kod` varchar(8191) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -77,9 +80,9 @@ CREATE TABLE `projects` (
 -- Dumping data for table `projects`
 --
 
-INSERT INTO `projects` (`id`, `kod`) VALUES
-(1, '        &lt;?php\r\n        // kod php\r\n        echo \"Hello, World!\";\r\n        ?>'),
-(2, '<?php>\r\necho 1;\r\n?>');
+INSERT INTO `projects` (`id`, `nazwa`, `kod`) VALUES
+(1, '1', '        <?php\r\n        echo \"Hello, World!\";\r\n        ?>      '),
+(2, '2', '<?php>\r\necho 1;\r\n?>');
 
 -- --------------------------------------------------------
 
@@ -138,13 +141,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `dolaczeni`
 --
 ALTER TABLE `dolaczeni`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `projects`

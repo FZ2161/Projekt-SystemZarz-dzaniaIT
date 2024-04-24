@@ -1,13 +1,4 @@
-/* #lewy{
-    width: 30%;
-}
-#prawy{
-    width: 70%;
-}
-#lewy, #prawy{
-    padding: 10px;
-    border-left: 5px dotted rgb(47, 0, 255);
-} */
+
 
 #glowny{
     display: flex;
