@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 24, 2024 at 07:16 AM
+-- Generation Time: Cze 04, 2024 at 01:22 PM
 -- Wersja serwera: 10.4.32-MariaDB
 -- Wersja PHP: 8.2.12
 
@@ -42,7 +42,10 @@ CREATE TABLE `comments` (
 INSERT INTO `comments` (`id`, `project-id`, `user`, `tresc`, `line`) VALUES
 (19, 2, 'user', 'sdfa', 1),
 (22, 1, 'user', 'jestem komentarzem', 2),
-(23, 1, 'user', 'jestem komentarzem', 3);
+(23, 1, 'user', 'jestem komentarzem', 3),
+(25, 1, 'user', 'kom', 11),
+(26, 1, 'user', 'jestem komentarzem123', 111),
+(27, 1, 'user', 'sd', 12);
 
 -- --------------------------------------------------------
 
@@ -62,7 +65,9 @@ CREATE TABLE `dolaczeni` (
 
 INSERT INTO `dolaczeni` (`id`, `project_id`, `user`) VALUES
 (15, 1, 'user'),
-(16, 2, 'user');
+(16, 2, 'user'),
+(20, 5, 'user'),
+(21, 11, 'user');
 
 -- --------------------------------------------------------
 
@@ -81,8 +86,9 @@ CREATE TABLE `projects` (
 --
 
 INSERT INTO `projects` (`id`, `nazwa`, `kod`) VALUES
-(1, '1', '        <?php\r\n        echo \"Hello, World!\";\r\n        ?>      '),
-(2, '2', '<?php>\r\necho 1;\r\n?>');
+(1, '1', '        <?php\r\n        echo \"Hello, World123!\";\r\n        ?>      '),
+(2, '2', '        <?php\r\n        echo \"Hello, World!\";;\r\n        ?>      '),
+(5, '123', 'echo \"Hello world\";');
 
 -- --------------------------------------------------------
 
@@ -103,6 +109,7 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`login`, `password`, `uprawnienia`) VALUES
 ('admin', '21232f297a57a5a743894a0e4a801fc3', 'admin'),
 ('pracownik', '491910ff69cf9f888d5bed54630ffbaa', 'pracownik'),
+('pracownik2', '491910ff69cf9f888d5bed54630ffbaa', 'pracownik'),
 ('user', 'ee11cbb19052e40b07aac0ca060c23ee', 'user');
 
 --
@@ -141,19 +148,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `dolaczeni`
 --
 ALTER TABLE `dolaczeni`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
