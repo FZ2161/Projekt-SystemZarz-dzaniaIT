@@ -63,24 +63,34 @@ if($_SESSION["zalogowanoJako"] != "pracownik"){
 
                     // // //  FORMULARZ WYBIERAJĄCY NAZWE  // // //                    
                     echo "<form action='' method='post'>";
-                    echo "<label for='nazwa'>Wybierz projekt nazwę projektu: </label><br>";
+                    echo "<label for='nazwa'>Wpisz nazwę nowego projektu: </label><br>";
                     echo "<input type='text' name='nazwa'><br><br>";
                     echo "<input type='submit' value='Dodaj projekt'>";
                     ?>
 
 
             <?php
-                if(!empty($_POST["nazwa"])){
-                    $nazwa = $_SESSION["nazwa"];
-                    echo "<h1>Dodawanie projektu</h1>";
-                    $sql="INSERT INTO projects (nazwa, kod) VALUES ($nazwa, null)";
-                    $results = mysqli_query($conn, $sql);
-                    if(mysqli_query($conn, $sql)){
-                        echo "<p style='background-color: green;'>Pomyślnie dodano projekt. Aby zmienić kod, zaktualizuj go.</p>";
-                    } else {
-                        echo "<p style='background-color: red;'>Nie udało się dodać projektu</p>";
-                    }
-                }
+if(isset($_POST["nazwa"])){
+    $nazwa = $_POST["nazwa"];
+    $kod = "#####  TUTAJ ZNAJDUJE SIĘ KOD PROJEKTU  #####";
+
+    // Sprawdź, czy nazwa już istnieje
+    $checkSql = "SELECT * FROM projects WHERE nazwa = '$nazwa'";
+    $checkResult = mysqli_query($conn, $checkSql);
+    if(mysqli_num_rows($checkResult) > 0 && $nazwa !=""){
+        echo "<p style='background-color: red;'>Nazwa projektu już istnieje. Proszę wybrać inną nazwę.</p>";
+    } else if ($nazwa !="") {
+        echo "<h1>Dodawanie projektu</h1>";
+        $sql="INSERT INTO projects (nazwa, kod) VALUES ('$nazwa', '$kod')";
+        $results = mysqli_query($conn, $sql);
+        if($results){
+            echo "<p style='background-color: green;'>Pomyślnie dodano projekt. Aby zmienić kod, zaktualizuj go.</p>";
+        } else {
+            echo "<p style='background-color: red;'>Nie udało się dodać projektu</p>";
+        }
+    }
+}
+
     
             ?>
                     
@@ -93,7 +103,8 @@ if($_SESSION["zalogowanoJako"] != "pracownik"){
                 <?php
                 #####################  Wybór projektu i formularz  #####################
 
-                    $sql="SELECT DISTINCT dolaczeni.user, projects.id, projects.kod, projects.nazwa FROM projects JOIN dolaczeni ON projects.id = dolaczeni.project_id";
+                    // $sql="SELECT DISTINCT dolaczeni.user, projects.id, projects.kod, projects.nazwa FROM projects JOIN dolaczeni ON projects.id = dolaczeni.project_id";
+                    $sql="SELECT DISTINCT projects.id, projects.kod, projects.nazwa FROM projects ";
 
                     $results = mysqli_query($conn, $sql);
                     // // //  FORMULARZ WYBIERAJĄCY PROJEKT  // // //
@@ -104,7 +115,7 @@ if($_SESSION["zalogowanoJako"] != "pracownik"){
                         echo "<select name='projekt'>";
                         echo "<option value='0'></option>";
                         while($row = mysqli_fetch_assoc($results)) {
-                            echo "<option value='" . $row['id'] . "'>" . "Projekt " . $row['id'] . " - " . $row["nazwa"] . "</option>";
+                            echo "<option value='" . $row['id'] . "'>" . "Projekt " . $row["nazwa"] . "</option>";
                         }
                         $kod = $row["kod"];
                         echo "</select><br><br>";
@@ -127,7 +138,7 @@ if($_SESSION["zalogowanoJako"] != "pracownik"){
                         $results = mysqli_query($conn, $sql);
                         while($row = mysqli_fetch_assoc($results)) {
                             echo "<form action='' method='post'>";
-                            echo "<textarea id='kod' name='kod' rows='20' cols='50'>";
+                            echo "<textarea id='kod' name='kod' rows='20' cols='70'>";
                             echo $row["kod"];
                             echo "</textarea><br><br>";
                             echo "<input type='submit' value='Zatwierdź zmiany'>";

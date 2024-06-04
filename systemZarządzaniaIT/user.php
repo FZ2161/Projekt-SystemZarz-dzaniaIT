@@ -99,7 +99,7 @@ if($_SESSION["zalogowanoJako"] != "user"){
                     $check_result = mysqli_query($conn, $check_query);
                 
                     if (mysqli_num_rows($check_result) > 0) {
-                        echo "<p style='color: red;'>Już jesteś dołączony do tego projektu</p>";
+                        // echo "<p style='color: red;'>Już jesteś dołączony do tego projektu</p>";
                     } else if ($_SESSION["zalogowanoJako"]=="user"){
                         // Dodanie użytkownika do projektu
                         $insert_query = "INSERT INTO dolaczeni (project_id, user) VALUES ('$wybranyProjekt', '$user')";
@@ -139,9 +139,13 @@ if($_SESSION["zalogowanoJako"] != "user"){
                         $kod = $row["kod"];
                         echo "</select><br><br>";
                         echo "<input type='submit' value='Zobacz kod projektu'>";
+
+                        ######### Spr, czy są komentarze
+
+
                     } else{
                         echo "<p>Aby zobaczyć kod dołącz do projektu</p>";
-                    }
+                    } 
                     ?>
                 </div>
 
@@ -200,7 +204,11 @@ if($_SESSION["zalogowanoJako"] != "user"){
                             /////refresh
                         }
                     } else{
-                        echo "<p><i>Aby zobaczyć komentarze wyświetl kod projektu</i></p>";
+                        if(isset($_POST["line"])) {
+                            echo "<p><i><b>Brak komentarzy do wyświetlenia</b></i></p>";
+                        } else {
+                            echo "<p><i>Aby zobaczyć komentarze wyświetl kod projektu</i></p>";
+                        }
                     }
 if (!empty($_POST["line"]) && !empty($_POST["value"])) {
     $line = $_POST["line"];
@@ -215,15 +223,23 @@ if (!empty($_POST["line"]) && !empty($_POST["value"])) {
     } else {
         // nie istnieje, komentarz
         $sql_insert = "INSERT INTO comments (`project-id`, user, tresc, line) VALUES ('$id', '$zalogowanoJako', '$value', '$line')";
+        
+        ##       id
+        $_SESSION["id"] = $id;
         if (mysqli_query($conn, $sql_insert)) {
             echo "<p style='color: green;'>Dodano komentarz.</p>";
+            //refresh
+
+            header("Location: " . $_SERVER['PHP_SELF']);
+            exit;
+
         } else {
             echo "<p style='color: red;'>Nie udało się dodać komentarza.</p>";
         }
     }
 } else {
     // Komunikat, jeśli pola są puste
-    echo "<p style='color: red;'>Wprowadź dane do wszystkich pól.</p>";
+    // echo "<p style='color: red;'>Wprowadź dane do wszystkich pól.</p>";
 }
 
                     ?>
